@@ -1,0 +1,78 @@
+function getUser(userId) {
+    return new Promise((resolve, reject) => {
+        console.log("get the user from the database");
+        setTimeout(() => {
+            resolve({
+                userId: userId,
+                username: 'admin'
+            });
+        }, 2000)
+    })
+}
+
+function getServices(user) {
+    return new Promise((resolve, reject) => {
+        console.log(`Get the services of ${user.username} from the api`);
+        setTimeout(() => {
+            resolve(['Email','web','api','whatsapp']);
+        }, 3000);
+    });
+}
+function getServiceCost(services) {
+    return new Promise((resolve, reject) => {
+        console.log(`Calculate the service cost of ${services}.`);
+        setTimeout(() => {
+            resolve(services.length * 100);
+            //     if(services.length * 100){
+            //          return resolve ("service length is greater than or equal to 100")
+            //     }
+
+            // else{
+            //     return reject("service length is less than 100")
+            // }
+        }, 2000);
+    });
+}
+
+function checkingofServices(services) {
+    return new Promise((resolve, reject) => {
+        console.log(`services which are provided here of ${services}`);
+        setTimeout(() => {
+            if (services > 100) {
+                return resolve({
+                    service: services, 
+                    message:"you will get discount"
+                })
+          
+            }
+            else {
+                return reject("not discount applicable")
+            }
+            
+
+        });
+    });
+}
+function prizes(serviceObj){
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            if (serviceObj.service > 300){
+                return resolve("prizes are for you")
+            }
+            else{
+                return reject("prizes not now for you")
+            }
+            
+        });
+    });
+}
+getUser(100)
+    .then(getServices)
+    .then(getServiceCost)
+    // .then(console.log)
+    .then(checkingofServices)
+    // .then(console.log)
+    .then(prizes)
+    .then(console.log)
+    .catch(err => console.log(err))
+
